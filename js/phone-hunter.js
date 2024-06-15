@@ -1,6 +1,6 @@
-const loadPhoneHunter = async () => {
+const loadPhoneHunter = async (phone) => {
   const res = await fetch(
-    "https://openapi.programming-hero.com/api/phones?search=iphone"
+    `https://openapi.programming-hero.com/api/phones?search=${phone}`
   );
   const data = await res.json();
   const phones = data.data;
@@ -9,19 +9,32 @@ const loadPhoneHunter = async () => {
 
 const displayPhone = (phones) => {
   const phoneContainer = document.getElementById("card-container");
+  phoneContainer.textContent = "";
+  console.log(phones.length);
+  const showAllContainer = document.getElementById("show-all-container");
+  if (phones.length > 12) {
+    showAllContainer.classList.remove("hidden");
+  } else {
+    // const showAllButton = document.getElementById("show-all-btn");
+    showAllContainer.classList.add("hidden");
+  }
+  phones = phones.slice(0, 12);
+
   phones.forEach((phone) => {
+    console.log(phone);
     const phoneDiv = document.createElement("div");
-    phoneDiv.classList.add = `card w-90 bg-gray-100 shadow-xl`;
+    phoneDiv.classList = `card max-w-[340px] bg-gray-100 shadow-xl my-4`;
+
     phoneDiv.innerHTML = `
      <figure class="px-10 pt-10">
           <img
-            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+            src=${phone.image}
             alt="Shoes"
             class="rounded-xl"
           />
         </figure>
         <div class="card-body items-center text-center">
-          <h2 class="card-title">Shoes!</h2>
+          <h2 class="card-title">${phone.phone_name}</h2>
           <p>If a dog chews shoes whose shoes does he choose?</p>
           <div class="card-actions">
             <button class="btn btn-primary">Buy Now</button>
@@ -31,4 +44,18 @@ const displayPhone = (phones) => {
     phoneContainer.appendChild(phoneDiv);
   });
 };
+
+const searchPhone1 = () => {
+  const phoneInput = document.getElementById("search-phone-1");
+  const phone = phoneInput.value;
+  loadPhoneHunter(phone);
+  phoneInput.value = "";
+};
+const searchPhone2 = () => {
+  const phoneInput = document.getElementById("search-phone-2");
+  const phone = phoneInput.value;
+  loadPhoneHunter(phone);
+  phoneInput.value = "";
+};
+
 loadPhoneHunter();

@@ -16,11 +16,53 @@
     <header>
       <h3 class="mx-auto w-[200px] h-6 my-5">phone-hunter</h3>
     </header>
-    <main class="container mx-auto px-[150px]">
-      <div
-        id="card-container"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-1"
-      ></div>
+    <main class="container mx-auto">
+      <!-- search button section -->
+
+      <section class="inline-flex w-fit">
+        <div
+          class="border-4 border-black max-w-xs flex justify-between rounded-lg m-2"
+        >
+          <input
+            id="search-phone-1"
+            type="text"
+            placeholder="Type your phone"
+            class=""
+          />
+          <button onclick="searchPhone1()" class="btn btn-secondary">
+            Click-phone-1
+          </button>
+        </div>
+
+        <!--  -->
+        <div
+          class="border-4 border-black max-w-xs flex justify-between rounded-lg m-2"
+        >
+          <input
+            id="search-phone-2"
+            type="text"
+            placeholder="Type your phone-2"
+          />
+          <button onclick="searchPhone2()" class="btn btn-secondary">
+            Click-phone-2
+          </button>
+        </div>
+      </section>
+
+      <!-- section show all button -->
+      <section class="m-2"></section>
+
+      <!-- section -->
+      <section>
+        <div
+          id="card-container"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-3"
+        ></div>
+        <!-- show all container -->
+        <div id="show-all-container" class="hidden my-3">
+          <button class="btn btn-secondary">Show-all</button>
+        </div>
+      </section>
     </main>
     <footer></footer>
     <script src="js/phone-hunter.js"></script>
