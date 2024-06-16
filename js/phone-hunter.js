@@ -54,11 +54,6 @@ const searchPhone1 = () => {
   phoneInput.value = "";
 };
 
-// show all data
-const showAll = () => {
-  searchPhone1();
-};
-
 // loading-spine
 
 const showLoadingSpine = (isLading) => {
@@ -69,5 +64,9 @@ const showLoadingSpine = (isLading) => {
     loading.classList.add("hidden");
   }
 };
+show all data
+const showAll = () => {
+  searchPhone1();
+};
 
-loadPhoneHunter();
+// loadPhoneHunter();
