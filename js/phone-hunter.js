@@ -10,7 +10,7 @@ const loadPhoneHunter = async (phone = 13, isShowAll) => {
 const displayPhone = (phones, isShowAll) => {
   const phoneContainer = document.getElementById("card-container");
   phoneContainer.textContent = "";
-  console.log(phones.length);
+  // console.log(phones.length);
   const showAllContainer = document.getElementById("show-all-container");
   if (phones.length > 12 && !isShowAll) {
     showAllContainer.classList.remove("hidden");
@@ -23,7 +23,7 @@ const displayPhone = (phones, isShowAll) => {
   }
 
   phones.forEach((phone) => {
-    console.log(phone);
+    // console.log(phone);
     const phoneDiv = document.createElement("div");
     phoneDiv.classList = `card max-w-[340px] bg-gray-100 shadow-xl my-4`;
 
@@ -39,7 +39,7 @@ const displayPhone = (phones, isShowAll) => {
           <h2 class="card-title">${phone.phone_name}</h2>
           <p>If a dog chews shoes whose shoes does he choose?</p>
           <div class="card-actions">
-            <button onclick="showModal('${phone.slug}')" class="btn btn-primary">Show Details</button>
+            <button onclick="handleShowDetail('${phone.slug}')" class="btn btn-primary">Show Details</button>
           </div>
         </div>
    `;
@@ -48,21 +48,35 @@ const displayPhone = (phones, isShowAll) => {
   showLoadingSpine(false);
 };
 // show details
-const showModal = async (id) => {
-  const phone = await fetch(
+const handleShowDetail = async (id) => {
+  const res = await fetch(
     ` https://openapi.programming-hero.com/api/phone/${id}`
   );
-  const data = await phone.json();
-  showDetails(data.data);
-  show_details.showModal();
+  const data = await res.json();
+  showDetailsModal(data.data);
 };
 
-const showDetails = (data) => {
-  console.log(data);
+const showDetailsModal = (phone) => {
+  // console.log(phone);
+  console.log(phone);
   const phoneName = document.getElementById("phone-name");
-  phoneName.innerText = data.phone_name;
+  phoneName.innerText = phone.name;
+
+  const detailContainer = document.getElementById("details-container");
+  detailContainer.innerHTML = `
+  <img src=${phone.image} alt="Shoes" class="rounded-xl"/>
+  <P>storage: ${phone.mainFeatures.storage}</P>
+  <P>displaySize: ${phone.mainFeatures.displaySize}</P>
+  <P>chipSet: ${phone.mainFeatures.chipSet}</P>
+  <P>memory: ${phone.mainFeatures.memory}</P>
+  <P>slug: ${phone.slug}</P>
+  <P>releaseDate: ${phone.releaseDate}</P>
+  <P>GPS: ${phone.others?.GPS ? phone.others.GPS : "no gps"}</P>
+  `;
+
+  show_details.showModal();
 };
-const showDetailsModal = () => {};
+// const showDetailsModal = () => {};
 // search text
 const searchPhone1 = (isShowAll) => {
   showLoadingSpine(true);
