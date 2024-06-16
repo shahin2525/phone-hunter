@@ -1,4 +1,4 @@
-const loadPhoneHunter = async (phone, isShowAll) => {
+const loadPhoneHunter = async (phone = 13, isShowAll) => {
   const res = await fetch(
     `https://openapi.programming-hero.com/api/phones?search=${phone}`
   );
@@ -39,7 +39,7 @@ const displayPhone = (phones, isShowAll) => {
           <h2 class="card-title">${phone.phone_name}</h2>
           <p>If a dog chews shoes whose shoes does he choose?</p>
           <div class="card-actions">
-            <button class="btn btn-primary">Buy Now</button>
+            <button onclick="showModal('${phone.slug}')" class="btn btn-primary">Show Details</button>
           </div>
         </div>
    `;
@@ -47,6 +47,22 @@ const displayPhone = (phones, isShowAll) => {
   });
   showLoadingSpine(false);
 };
+// show details
+const showModal = async (id) => {
+  const phone = await fetch(
+    ` https://openapi.programming-hero.com/api/phone/${id}`
+  );
+  const data = await phone.json();
+  showDetails(data.data);
+  show_details.showModal();
+};
+
+const showDetails = (data) => {
+  console.log(data);
+  const phoneName = document.getElementById("phone-name");
+  phoneName.innerText = data.phone_name;
+};
+const showDetailsModal = () => {};
 // search text
 const searchPhone1 = (isShowAll) => {
   showLoadingSpine(true);
@@ -71,4 +87,4 @@ const showAll = () => {
   searchPhone1(true);
 };
 
-// loadPhoneHunter();
+loadPhoneHunter();
